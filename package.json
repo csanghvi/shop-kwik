@@ -1,0 +1,25 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "Ecommerce website to demostrate the power of React & uses Stripe for checkout experience",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csanghvi/shop-kwik.git"
+  },
+  "author": "Chintan Sanghvi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csanghvi/shop-kwik/issues"
+  },
+  "homepage": "https://github.com/csanghvi/shop-kwik#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
+    "stripe": "^7.9.0"
+  }
+}
