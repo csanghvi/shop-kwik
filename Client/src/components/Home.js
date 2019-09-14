@@ -29,7 +29,7 @@ import { addToCart } from '../actions/cart-actions'
 
         return(
             <div className="container">
-                <h3 className="center">Our items</h3>
+                <h3 className="center">Shop Shoes</h3>
                 <div className="box">
                     {itemList}
                 </div>

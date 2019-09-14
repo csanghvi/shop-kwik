@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
-const { resolve } = require("path");
+const {
+  resolve
+} = require("path");
 const bodyParser = require('body-parser')
 // Replace if using a different env file or config
 const ENV_PATH = ".env";
 const envPath = resolve(ENV_PATH);
-const env = require("dotenv").config({ path: envPath });
+const env = require("dotenv").config({
+  path: envPath
+});
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors')
 
@@ -31,6 +35,8 @@ app.get("/", (req, res) => {
   res.sendFile(path);
 });
 
+
+/*
 // Fetch the Checkout Session to display the JSON result on the success page
 app.get("/checkout-session", async (req, res) => {
   const { sessionId } = req.query;
@@ -68,15 +74,84 @@ app.post("/create-checkout-session", async (req, res) => {
     sessionId: session.id
   });
 });
+*/
 
 app.get("/public-key", (req, res) => {
-  res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
+  res.send({
+    publicKey: process.env.STRIPE_PUBLIC_KEY
+  });
 });
+
+
+app.post("/customer", async (req, res) => {
+  console.log('Customer EP Req body is %o', req.body)
+  // Create a new customer and then a new charge for that customer:
+  try {
+    var customer = await stripe.customers
+      .create({
+        email: req.body.email
+      })
+
+    console.log("CUstomer is %o", customer.id)
+    /*
+      id: 'cus_Fo5Ut6pxwJVKDF',
+      email: 'CHINTANSANGHVI5@GMAIL.COM',
+      name: null,
+    */
+    var source = await stripe.customers.createSource(customer.id, {
+      source: req.body.token
+    })
+    console.log("Source is %o", source.customer)
+    var items = req.body.items.map(item => {
+      console.log('Item title is %o', item)
+      return stripe.charges.create({
+        amount: req.body.total,
+        currency: "usd",
+        description: item.title,
+        customer: source.customer,
+        metadata:{title:item.title}
+      })
+    })
+    var result = Promise.all(items)
+    result.then(val => {
+      console.log('Resulting Value is %o', val.length);
+      var dataToSend = val.map(value => {
+        console.log('Does it have metadata? %o', value.metadata)
+        return {
+          id: value.id,
+          amount: value.amount,
+          title: value.description,
+          status:value.status
+        }
+      })
+      console.log('Sending DAta Value is %o', dataToSend);
+      res.json({
+        status: 'succeeded',
+        result: dataToSend
+      });
+    })
+    /*
+    var charge = await stripe.charges.create({
+          amount: req.body.total,
+          currency: "usd",
+          description: req.body.items[0].description,
+          customer: source.customer
+        });
+      console.log('Charge is %o', charge)
+      */
+
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
 
 app.post("/charge", async (req, res) => {
   console.log('Req body is %o', req.body)
   try {
-    let {status} = await stripe.charges.create({
+    let {
+      status
+    } = await stripe.charges.create({
       amount: req.body.total,
       currency: "usd",
       description: req.body.item[0].description,
@@ -84,7 +159,9 @@ app.post("/charge", async (req, res) => {
     });
     console.log('status is %o', status)
 
-    res.json({status});
+    res.json({
+      status
+    });
   } catch (err) {
     res.status(500).end();
   }

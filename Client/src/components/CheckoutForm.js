@@ -3,27 +3,11 @@ import {CardElement, injectStripe} from 'react-stripe-elements';
 import axiosApi from '../axiosApi'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
+import CheckoutSummary from './CheckoutSummary'
+import { removeItem } from '../actions/cart-actions'
+import Button from '@material-ui/core/Button';
 
-import { makeStyles } from '@material-ui/core/styles';
-var FormData = require('form-data')
 
-// const useStyles = makeStyles(theme => ({
-//   container: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//   },
-//   textField: {
-//     marginLeft: theme.spacing(1),
-//     marginRight: theme.spacing(1),
-//   },
-//   dense: {
-//     marginTop: theme.spacing(2),
-//   },
-//   menu: {
-//     width: 200,
-//   },
-// }));
-// const classes = useStyles();
 
 function validate (state, token) {
   // we are going to store errors for all fields
@@ -44,12 +28,19 @@ class CheckoutForm extends Component {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this)
     this.state = {
       complete:false,
       email:'',
       errors:[],
-      result:''
+      result:'',
+      orderDetails:[]
     }
+  }
+
+  handleRemove = (id)=>{
+      console.log("LOoking to remove item %o", id);
+      this.props.removeItem(id);
   }
 
   handleEmailChange = (e) => {
@@ -67,24 +58,25 @@ class CheckoutForm extends Component {
     }
 
     console.log("Token is %o", token)
-    const data = new FormData()
     var newPayload = {
       items:this.props.addedItems,
       total:this.props.total,
       token:token.id,
       email:this.state.email
     }
-    console.log('stringify %o', JSON.stringify(newPayload))
-    data.append('OrderDetails', JSON.stringify(newPayload))
-    console.log('Sending data as %o', data)
-    axiosApi.post("/charge",newPayload)
+    axiosApi.post("/customer",newPayload)
     .then(res=>{
       console.log("Received res from server is %o",res)
-      if (res.data.status === '"succeeded"') {
+      if (res.data.status === "succeeded") {
         console.log("Purchase Complete!")
+        this.props.addedItems.map(item => {
+          console.log('Item is %o', item)
+          return this.handleRemove(item.id)
+        })
         this.setState({
           complete:true,
-          result:"Success"
+          result:"Success",
+          orderDetails: res.data.result
         })
       } else {
         this.setState({
@@ -108,7 +100,11 @@ class CheckoutForm extends Component {
       {this.state.result.length > 0 && this.state.result.includes('Fail') &&
         <p> <strong><font color='red' size='3' key={this.state.result}>Result: {this.state.result} </font></strong></p>}
 
-        {this.state.complete && <h1>Purchase Complete</h1>}
+        {this.state.complete ? (
+          <CheckoutSummary orderDetails = {this.state.orderDetails}
+            />
+        ) : (
+        <div>
         <p>Would you like to complete the purchase?</p>
         <TextField
             id="outlined-email-input"
@@ -139,7 +135,11 @@ class CheckoutForm extends Component {
             }
           }}
         />
-        <button onClick={this.handleOnSubmit}>Send</button>
+        <Button variant="contained" onClick={this.handleOnSubmit}>
+          Submit Payment
+        </Button>
+        </div>
+        )}
       </div>
 
     );
@@ -153,4 +153,10 @@ const mapStateToProps = (state)=>{
     }
 }
 
-export default connect(mapStateToProps, {  })(injectStripe(CheckoutForm))
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        removeItem: (id)=>{dispatch(removeItem(id))}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectStripe(CheckoutForm))

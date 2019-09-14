@@ -1,6 +1,5 @@
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import CheckoutForm from './CheckoutForm'
 import axiosApi from '../axiosApi'
 
@@ -33,7 +32,6 @@ class StripeCheckoutForm extends Component {
       {this.state.pk &&
         <StripeProvider apiKey={this.state.pk}>
           <div className="container">
-            <h4>Confirm Payment</h4>
             <Elements>
               <CheckoutForm />
             </Elements>
