@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
- const Navbar = ()=>{
+import { connect } from 'react-redux'
+
+class Navbar extends Component{
+  render(){
     return(
             <nav className="nav-wrapper">
                 <div className="container">
@@ -10,12 +13,19 @@ import { Link } from 'react-router-dom'
                         <li><Link to="/">Shop</Link></li>
                         <li><Link to="/cart">My cart</Link></li>
                         <li><Link to="/cart"><i className="material-icons">shopping_cart</i></Link></li>
+                        <li>({this.props.addedItems.length})</li>
                     </ul>
                 </div>
             </nav>
-
-
     )
+  }
 }
 
-export default Navbar;
+const mapStateToProps = (state)=>{
+    return{
+        addedItems: state.addedItems,
+        total: state.total
+    }
+}
+
+export default connect(mapStateToProps, {  })(Navbar)

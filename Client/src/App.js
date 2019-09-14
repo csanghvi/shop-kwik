@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Cart from './components/Cart'
+import StripeCheckoutForm from './components/StripeCheckout'
 
 class App extends Component {
   render() {
@@ -14,7 +15,8 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={Home}/>
                     <Route path="/cart" component={Cart}/>
-                  </Switch>
+                    <Route path="/checkout" component={StripeCheckoutForm}/>
+                </Switch>
              </div>
        </BrowserRouter>
 

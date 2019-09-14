@@ -1,12 +1,18 @@
 const express = require("express");
 const app = express();
 const { resolve } = require("path");
+const bodyParser = require('body-parser')
 // Replace if using a different env file or config
 const ENV_PATH = ".env";
 const envPath = resolve(ENV_PATH);
 const env = require("dotenv").config({ path: envPath });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const cors = require('cors')
 
+app.use(cors())
+
+
+app.use(bodyParser.json())
 app.use(express.static(process.env.STATIC_DIR));
 app.use(
   express.json({
@@ -65,6 +71,23 @@ app.post("/create-checkout-session", async (req, res) => {
 
 app.get("/public-key", (req, res) => {
   res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
+});
+
+app.post("/charge", async (req, res) => {
+  console.log('Req body is %o', req.body)
+  try {
+    let {status} = await stripe.charges.create({
+      amount: req.body.total,
+      currency: "usd",
+      description: req.body.item[0].description,
+      source: req.body.token
+    });
+    console.log('status is %o', status)
+
+    res.json({status});
+  } catch (err) {
+    res.status(500).end();
+  }
 });
 
 // Webhook handler for asynchronous events.
