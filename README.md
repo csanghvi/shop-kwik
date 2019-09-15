@@ -1,3 +1,17 @@
+## Brief Overview
+
+This application is 
+
+![Checkout Flow](https://i.imgur.com/UAE8pdi.png)
+
+
+
+A paragraph or two about how you approached this problem.
+
+A paragraph about why you picked the language/framework you did.
+
+A paragraph or two about how you might extend this if you were building a more robust instance of the same application.
+
 ### https://stripe.com/docs/recipes/elements-react
 ### https://github.com/stripe/react-stripe-elements#using-the-paymentrequestbuttonelement
 ### https://stripe.com/docs/charges#creating-charges
