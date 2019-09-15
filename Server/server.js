@@ -17,7 +17,17 @@ app.use(cors())
 
 
 app.use(bodyParser.json())
-app.use(express.static(process.env.STATIC_DIR));
+app.use(express.static(process.env.STATIC_DIR))
+//production mode
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, process.env.STATIC_DIR)))
+  app.get('/', (req, res) => {
+    res.sendfile(path.join(__dirname = 'client/build/index.html'));
+  })
+}
+
+//app.get('*', (req, res) => {  res.sendFile(path.join(__dirname+'/client/public/index.html'));})
+
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
