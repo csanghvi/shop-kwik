@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Ecommerce website to demostrate the power of React & uses Stripe for checkout experience",
   "main": "index.js",
+  "engines": {
+  "node": "12.8.0"
+},
   "scripts": {
     "client-install": "npm install --prefix Client",
     "start": "cd Server; node server.js",
