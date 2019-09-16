@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 class Navbar extends Component{
   render(){
     return(
+      <div class="navbar-fixed">
             <nav className="nav-wrapper">
                 <div className="container">
-                    <Link to="/" className="brand-logo">Shopping</Link>
+                    <Link to="/" className="brand-logo">ECommerce-Stripe</Link>
 
                     <ul className="right">
                         <li><Link to="/">Shop</Link></li>
@@ -17,6 +18,7 @@ class Navbar extends Component{
                     </ul>
                 </div>
             </nav>
+        </div>
     )
   }
 }
