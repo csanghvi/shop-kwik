@@ -215,4 +215,11 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
+
+
+// app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
+// Choose the port and start the server
+const PORT = process.env.PORT || 4242
+app.listen(PORT, () => {
+  console.log(`Mixing it up on port ${PORT}`)
+})
