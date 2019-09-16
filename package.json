@@ -11,7 +11,7 @@
     "start": "cd Server; node server.js",
     "server": "cd Server; nodemon server.js",
     "client": "npm start --prefix Client",
-    "dev": "concurrently - kill-others \"npm run server\" \"npm run client\"",
+    "dev": "concurrently - kill-others \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
