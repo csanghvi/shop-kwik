@@ -11,7 +11,7 @@
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.1",
+    "react-scripts": "3.1.1",
     "react-stripe-elements": "^5.0.0",
     "redux": "^4.0.1"
   },
@@ -23,6 +23,9 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "resolutions": {
+    "fsevents": "1.2.9"
   },
   "browserslist": {
     "production": [
