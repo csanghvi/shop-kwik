@@ -1,7 +1,8 @@
 ## Brief Overview
 This application is simple ecommerce app that demonstrates how to use Stripe payments for checkout
 
-[Demo](https://fast-retreat-49982.herokuapp.com/)
+You can find a working demo of the app hosted on Heroku: [Demo](https://fast-retreat-49982.herokuapp.com/)
+
 
 ### High level flow
 
