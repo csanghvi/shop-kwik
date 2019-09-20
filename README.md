@@ -1,13 +1,17 @@
 ## Brief Overview
-
-### High level flow
 This application is simple ecommerce app that demonstrates how to use Stripe payments for checkout
 
+You can find a working demo of the app hosted on Heroku: [Demo](https://fast-retreat-49982.herokuapp.com/)
+
+
+### High level flow
+
+Below is a squence flow of interactions between User, Browser (App Client), App server, Stripe.
 ![Checkout Flow](https://i.imgur.com/UAE8pdi.png)
 
 
 ### Features
-* Add shopping cart andremove items from the cart
+* Add shopping cart and remove items from the cart
 * Payment page with Credit Card option
 * Checkout flow through Stripe
 * Confirmation page
@@ -44,6 +48,10 @@ We need to introduce a database & a caching layer to account for storing user id
 - **Support for Full checkout**
 Support dynamic Taxes & Shipping
 
+
+- **Support for Full catalog**
+Robust catalog
+
 - **Support for 3rd party integration with CRM or ERP**
 
    In order to track purchases through to our ERP, we should consider using webhooks from Stripe to then plug into a ERP or CRM
@@ -56,13 +64,7 @@ Support dynamic Taxes & Shipping
 >Handle the API error returned when a payment fails. For blocked and card issuer-declined payments, the error includes the charge’s ID, which you can then use to retrieve the charge
 >Make use of webhooks to listen for event notifications. When a payment fails, the charge.failed event is triggered, containing the Charge object
 
-- Retries
-
-- Email receipts upon payments
-
-- Handle webhook support for disputes
-
-- Refunds
+- Retries, Email receipts, Webhook for disputes, refunds
 
 
 
@@ -70,7 +72,6 @@ Support dynamic Taxes & Shipping
 - https://stripe.com/docs/recipes/elements-react
 - https://github.com/stripe/react-stripe-elements#using-the-paymentrequestbuttonelement
 - https://stripe.com/docs/charges#creating-charges
-- https://www.npmjs.com/package/stripe
 - https://stripe.com/docs
 - https://stripe.com/docs/api/charges/object
 - https://dashboard.stripe.com/test/payments?status%5B%5D=successful
