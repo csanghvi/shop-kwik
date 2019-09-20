@@ -17,6 +17,18 @@ const cors = require('cors')
 app.use(cors())
 
 
+app.use(
+  express.json({
+    // We need the raw body to verify webhook signatures.
+    // Let's compute it only when hitting the Stripe webhook endpoint.
+    verify: function(req, res, buf) {
+      if (req.originalUrl.startsWith("/webhook")) {
+        req.rawBody = buf.toString();
+      }
+    }
+  })
+);
+
 app.use(bodyParser.json())
 app.use(express.static(process.env.STATIC_DIR))
 //production mode
@@ -29,17 +41,6 @@ if(process.env.NODE_ENV === 'production') {
 
 //app.get('*', (req, res) => {  res.sendFile(path.join(__dirname+'/client/public/index.html'));})
 
-app.use(
-  express.json({
-    // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
-    verify: function(req, res, buf) {
-      if (req.originalUrl.startsWith("/webhook")) {
-        req.rawBody = buf.toString();
-      }
-    }
-  })
-);
 
 app.get("/", (req, res) => {
   const path = resolve(process.env.STATIC_DIR + "/index.html");
@@ -187,6 +188,7 @@ app.post("/webhook", async (req, res) => {
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
     let signature = req.headers["stripe-signature"];
+    console.log("Req rawbody is %o",req.rawBody)
 
     try {
       event = stripe.webhooks.constructEvent(
