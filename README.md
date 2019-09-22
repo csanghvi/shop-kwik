@@ -1,5 +1,5 @@
 ## Overview
-This repository is a simple example of how to use Stripe APIs for collecting payments. The goal of this project is to demonstrate how easy it is to use a Stripe APIs and get setup for collecting payments on your ECommerce website. 
+This repository should serve as a simple example of how to use Stripe APIs for collecting payments. The goal of this project is to help you get started with using Stripe payment APIs for an ecommerce website. 
 ## Live Demo
  You can find a working demo of the app hosted on Heroku: [Demo](https://fast-retreat-49982.herokuapp.com/)
  - *Note: The demo is running in test mode – use `4242424242424242` as a test card number with any CVC + future expiration date.*
@@ -23,13 +23,13 @@ Server side stack:
 
 ## High level flow
 
-1.	The first step for our client is to get our Stripe publishable API key (pk_id). We could store the key using environment variable for REACT apps or get the pk_id from our server once user enters the checkout page.
+1.	The first step for our client is to get our Stripe publishable API key (pk_id). We have an option to store the key using environment variable for REACT apps, however, we are going to get the pk_id from our server once user enters the checkout page.
 2.	Next, to collect payments from users on our e-commerce website we will create a payment form. Here we are going to make use of [Stripe Elements]([https://stripe.com/docs/recipes/elements-react](https://stripe.com/docs/recipes/elements-react)) to create a form that securely collects our customer’s card information without requiring us to handle sensitive card data. 
 We then get the token as below: 
 ```javascript
 let {token} = await this.props.stripe.createToken({name: "Name"});
 ```
-3.	On the checkout page we are collecting users' email address as a mandatory field. This is only done for demonstration of how we can use Stripe's customer endpoint to first create a customer, and subsequently create charges. This email address along with credit card token and other purchase details is sent to our app server. Our app server will then call Stripe's `/v1/customers`endpoint to create a customer record. Stripe will return a customer id if the customer record is created successfully. 
+3.	On the checkout page we are collecting users' email address as a mandatory field. This is only done to demonstrate how we can use Stripe's customer endpoint to first create a customer, and subsequently create charges. The email address along with credit card token and other purchase details are sent to our app server. Our app server will then call Stripe's `/v1/customers` endpoint to create a customer record. Stripe will return a customer id if the customer record is created successfully. 
 ```javascript
     var customer = await stripe.customers.create({
         email: req.body.email
@@ -96,7 +96,7 @@ Things to consider before getting ready for production:
 	 - The current iteration of our demo app only uses credit card payment option. Using Stripe APIs we can easily add support for additional payment methods. The [payment request button element](%5Bhttps://github.com/stripe/react-stripe-elements#using-the-paymentrequestbuttonelement%5D%28https://github.com/stripe/react-stripe-elements#using-the-paymentrequestbuttonelement%29) lets us collect payment and address information from customers using Apple Pay and the Payment Request API.
 
  - [ ] Support for shipping & taxes:
-	 - In order to demonstrate a full e-commerce solution our app should also support collecting users' address information & calculate shipping based off of that. We must look into using Avalara APIs or other 3rd party tax APIs to collect tax related information. It will be good to keep an eye out on Stripes' [roadmap relating to taxes](https://stripe.com/docs/billing/taxes) 
+	 - In order to operate as a full e-commerce solution our app should also support collecting users' address information & calculate shipping based off of that. We must look into using Avalara APIs or other 3rd party tax APIs to collect tax related information. It will be good to keep an eye out on Stripes' [roadmap relating to taxes](https://stripe.com/docs/billing/taxes) 
 
 - [ ] After payment use cases
 	- Please refer Stripe's documentation for below scenarios that we must consider post payment. 
