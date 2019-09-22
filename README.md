@@ -1,8 +1,8 @@
 ## Overview
 This repository is a simple example of how to use Stripe APIs for collecting payments. The goal of this project is to demonstrate how easy it is to use a Stripe APIs and get setup for collecting payments on your ECommerce website. 
 ## Live Demo
- You can find a working demo of the app hosted on Heroku: [Demo](https://fast-retreat-49982.herokuapp.com/) 
- *Note: The demo is running in test mode – use `4242424242424242` as a test card number with any CVC + future expiration date.*
+ You can find a working demo of the app hosted on Heroku: [Demo](https://fast-retreat-49982.herokuapp.com/)
+ - *Note: The demo is running in test mode – use `4242424242424242` as a test card number with any CVC + future expiration date.*
 *Read more about testing on Stripe at  [https://stripe.com/docs/testing](https://stripe.com/docs/testing).*
 ## Features
  -   Add & remove items from shopping cart
