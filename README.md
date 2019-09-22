@@ -56,7 +56,7 @@ stripe.charges.create({
 6.	Upon receiving a success response from Stripe, our app server will send a confirmation of charges to our app client, which in turn will take the user to payment confirmation page and display the `ch_id (charge id)`
 
 Below sequence diagram explains the flow. 
-![Checkout Flow](https://i.imgur.com/UAE8pdi.png)
+![Checkout Flow](https://i.imgur.com/JzcpnNu.png)
 
  
 ## Guidelines for development
