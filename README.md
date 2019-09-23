@@ -100,7 +100,7 @@ Things to consider before getting ready for production:
 
 - [ ] After payment use cases
 	- Please refer Stripe's documentation for below scenarios that we must consider post payment. 
-	    - Support for Failed payments
+	    - Support for failed payments
 	    - Handle retries
 	    - Support sending email receipts for payment confirmation
 	    - Handle use cases for disputes, refunds & chargebacks
