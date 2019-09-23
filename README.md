@@ -13,7 +13,7 @@ This repository should serve as a simple example of how to use Stripe APIs for c
 This application has a web client that will be the store front end & a web server that will be responsible to process the payments by making Stripe API calls.  
 
 Client side stack:
- - React client app bootstrapped by [create-react-app ]([https://create-react-app.dev/docs/getting-started](https://create-react-app.dev/docs/getting-started))
+ - React client app bootstrapped from [create-react-app ]([https://create-react-app.dev/docs/getting-started](https://create-react-app.dev/docs/getting-started))
  - Redux, for managing state of shopping cart items
  - react-stripe-elements for creating payment form
 
